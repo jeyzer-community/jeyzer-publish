@@ -7,6 +7,7 @@
 	<packaging>jar</packaging>
 	<version>2.0-SNAPSHOT</version>
 	<name>Jeyzer Publisher</name>
+	<url>https://github.com/jeyzer-community/jeyzer-publish</url>
 	<description>The Jeyzer Publisher library. More info at https://jeyzer.org/jeyzer-publisher/</description>
 	
 	<dependencies>
@@ -63,6 +64,20 @@
                     	</manifestEntries>
 					</archive>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -136,10 +151,10 @@
 	<inceptionYear>2020</inceptionYear>
 	
 	<scm>
-		<connection>scm:git:git://github.com/jeyzer-community/jeyzer-publish</connection>
-		<developerConnection>scm:git:git://github.com/jeyzer-community/jeyzer-publish</developerConnection>
-		<tag>HEAD</tag>
 		<url>https://github.com/jeyzer-community/jeyzer-publish</url>
+		<connection>scm:git:ssh://git@github.com/jeyzer-community/jeyzer-publish.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/jeyzer-community/jeyzer-publish.git</developerConnection>
+		<tag>HEAD</tag>
 	</scm>
 	
 </project>

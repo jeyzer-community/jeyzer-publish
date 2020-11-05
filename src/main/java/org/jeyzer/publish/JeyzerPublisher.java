@@ -991,8 +991,9 @@ public abstract class JeyzerPublisher implements JeyzerMXBean{
 				}
 				
 				private boolean isLoopedEvent(JzrEventInfoImpl evtInfo) {
-					if (this.previousEvent != null && this.previousEvent.equalsOrigin(evtInfo)) {
-						return true;
+					if (this.previousEvent != null && this.previousEvent.equalsOrigin(evtInfo)
+							&& this.previousEvent.isTimeContemporary(evtInfo)) {
+						return true;  // todo : previous event should carry this discard info and a counter
 					}
 					else {
 						this.previousEvent = evtInfo;
@@ -1244,7 +1245,7 @@ public abstract class JeyzerPublisher implements JeyzerMXBean{
 		 * Internal Jeyzer event info bean<br>
 		 */
 		private static final class JzrEventInfoImpl implements JzrEventInfo {
-
+			
 			private String source;
 			private String service;
 			
@@ -1359,6 +1360,16 @@ public abstract class JeyzerPublisher implements JeyzerMXBean{
 				} else if (!event.getMessage().equals(other.getMessage()))
 					return false;
 				return true;
+			}
+			
+			public boolean isTimeContemporary(JzrEventInfoImpl other) {
+				if (other == null)
+					return false;
+				
+				// Arbitrary decision : events are considered contemporary if both happening within 5 sec range
+				long diffTime = other.startTime > this.startTime ? 
+						other.startTime - this.startTime : this.startTime - other.startTime;
+				return diffTime < 5000L;
 			}
 		}
 

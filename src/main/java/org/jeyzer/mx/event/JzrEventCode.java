@@ -17,7 +17,8 @@ package org.jeyzer.mx.event;
  * <p>The Jeyzer event code interface gives access to the applicative event information.<br>
  *    The event code is identified by a unique abbreviation (ex: MAK-101), which is usually a support documentation pointer.<br>
  *    The name and description (optional, considering event could be documented externally) describe the event.<br>
- *    The type is optional and could be used to group codes (ex: MAK).
+ *    The ticket is optional and should refer to a ticket in an issue tracking product such as JIRA.<br>
+ *    The type is optional and could be used to group codes (ex: MAK).<br>
  *    The event code is associated to a level and sub level indicating its importance.<br></p>
  * <p>It is recommended to implement enumerations of codes that will inherit this interface.
  * </p>
@@ -41,7 +42,13 @@ public interface JzrEventCode {
 	 * Get the event code description. Optional
 	 * @return the event code description
 	 */
-	public String getDescription();	
+	public String getDescription();
+
+	/**
+	 * Get the event code ticket. Optional
+	 * @return the event code ticket
+	 */
+	public String getTicket();
 	
 	/**
 	 * Get the event type. Optional

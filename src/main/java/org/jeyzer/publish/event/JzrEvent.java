@@ -50,7 +50,7 @@ public interface JzrEvent extends Cloneable {
 	public short getTrustFactor();
 	
 	/**
-	 * Clone the event. 
+	 * Clone the event. Deep copy must be ensured.
 	 * @return the cloned event
 	 */
 	public Object clone();

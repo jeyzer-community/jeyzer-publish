@@ -40,6 +40,8 @@ package org.jeyzer.publish;
 
 public class JeyzerPublisherInit {
 
+	private JeyzerPublisherInit() {}
+	
 	/**
 	 * if set to true, data collection is not issued. False by default. 
 	 * Can be re-enabled by calling the <code>resumeDataCollection</code> method (locally or through JMX).

@@ -326,6 +326,7 @@ public abstract class JeyzerPublisher implements JeyzerMXBean{
 			try {
 				this.nodeName = InetAddress.getLocalHost().getHostName();
 			} catch (UnknownHostException e) {
+				this.nodeName = null;
 			}
 			
 			JzrPublisherEvent publisherEvent = new JeyzerPublisherEventImpl(
@@ -340,11 +341,11 @@ public abstract class JeyzerPublisher implements JeyzerMXBean{
 				return false;
 			initialized = true;
 			
-			disableReaper = Boolean.parseBoolean(props.getProperty(JeyzerPublisherInit.PUBLISHER_DISABLE_REAPER_PROPERTY, "false"));
+			disableReaper = Boolean.parseBoolean(props.getProperty(JeyzerPublisherInit.PUBLISHER_DISABLE_REAPER_PROPERTY, Boolean.FALSE.toString()));
 			if (disableReaper)
 				this.stopReaper();
 			
-			boolean disableDataCollection = Boolean.parseBoolean(props.getProperty(JeyzerPublisherInit.DATA_DISABLE_COLLECTION_PROPERTY, "false"));
+			boolean disableDataCollection = Boolean.parseBoolean(props.getProperty(JeyzerPublisherInit.DATA_DISABLE_COLLECTION_PROPERTY, Boolean.FALSE.toString()));
 			if (disableDataCollection) {
 				this.dataCollectionActive = false;	
 				JzrPublisherEvent publisherEvent = new JeyzerPublisherEventImpl(
@@ -352,7 +353,7 @@ public abstract class JeyzerPublisher implements JeyzerMXBean{
 				this.eventMgr.addPublisherEvent(publisherEvent);
 			}
 
-			generateJzrRecorderCollectionEvent = Boolean.parseBoolean(props.getProperty(JeyzerPublisherInit.PUBLISHER_ENABLE_JZR_RECORDER_COLLECTION_EVENT_PROPERTY, "false"));
+			generateJzrRecorderCollectionEvent = Boolean.parseBoolean(props.getProperty(JeyzerPublisherInit.PUBLISHER_ENABLE_JZR_RECORDER_COLLECTION_EVENT_PROPERTY, Boolean.FALSE.toString()));
 			
 			eventMgr.init(props);
 			
@@ -685,7 +686,7 @@ public abstract class JeyzerPublisher implements JeyzerMXBean{
 			}
 			
 			private void initEventCollection(JzrEventInfoImplGroup eventGroup, String propertyName, Properties props, JzrPublisherEventCode code) {
-				boolean disableDataCollection = Boolean.parseBoolean(props.getProperty(propertyName, "false"));
+				boolean disableDataCollection = Boolean.parseBoolean(props.getProperty(propertyName, Boolean.FALSE.toString()));
 				if (disableDataCollection) {
 					eventGroup.suspendEventCollection();
 					JzrPublisherEvent publisherEvent = new JeyzerPublisherEventImpl(code);
@@ -723,12 +724,12 @@ public abstract class JeyzerPublisher implements JeyzerMXBean{
 			private void initEventLimit(JzrEventInfoImplGroup group, String eventsLimitProperty, Properties props) {
 				String value = props.getProperty(eventsLimitProperty);
 				if (value == null)
-					return; /// stay with default
+					return; // stay with default
 				try {
 					int limit = Integer.parseInt(value);
 					group.setEventsLimit(limit);
 				}catch(NumberFormatException ex) {
-					return; /// stay with default
+					// stay with default
 				}
 			}
 
@@ -1210,7 +1211,7 @@ public abstract class JeyzerPublisher implements JeyzerMXBean{
 			public JzrThreadInfoImpl(final long threadId, final JzrActionContext context, final long startTime) {
 				this.jhId = Integer.toString(idCount.incrementAndGet());
 				this.threadId = threadId;
-				this.context = (JzrActionContext)context.clone();
+				this.context = new JzrActionContext(context);
 				this.startTime = startTime;
 			}
 

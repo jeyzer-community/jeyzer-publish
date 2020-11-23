@@ -21,7 +21,7 @@ import java.util.Map;
  * All its attributes are optional.<br>
  * Non thread safe<br>
  */
-public final class JzrActionContext implements Cloneable {
+public final class JzrActionContext {
 
 	private String id;
 	private String user;
@@ -49,6 +49,19 @@ public final class JzrActionContext implements Cloneable {
 			this.contextParams = params;
 	}
 	
+	/**
+	 * The Jeyzer action context cloning constructor
+	 * @param context  	         the context to clone
+	 */
+	@SuppressWarnings("unchecked")
+	public JzrActionContext(JzrActionContext context) {
+		this.id = context.id;
+		this.user = context.user;
+		this.functionPrincipal = context.functionPrincipal;
+		if (context.contextParams != null)
+			this.contextParams = (Map<String, String>)((HashMap<String, String>)context.contextParams).clone();
+	}
+
 	/**
 	 * Get the applicative action id. Can be null
 	 * @return the applicative action id
@@ -122,17 +135,5 @@ public final class JzrActionContext implements Cloneable {
 	public void setContextParam(final String key, final String value) {
 		if (key != null)
 			this.contextParams.put(key, value);
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public Object clone(){
-		// perform deep copy
-		return new JzrActionContext(
-				this.id,
-				this.user,
-				this.functionPrincipal,
-				(Map<String, String>)((HashMap<String, String>)this.contextParams).clone()
-				); 
 	}
 }

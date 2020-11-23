@@ -178,6 +178,12 @@ public abstract class JeyzerPublisher implements JeyzerMXBean{
 	 * @param value  the dynamic process context parameter value
 	 */
 	public abstract void setDynamicProcessContextParam(final String key, final String value);
+	
+	/**
+	 * Removes a dynamic process context parameter to Jeyzer
+	 * @param key  the dynamic process context parameter key
+	 */
+	public abstract void removeDynamicProcessContextParam(final String key);
 
 	/**
 	 * Get a Jeyzer monitor handler to generate events
@@ -509,6 +515,14 @@ public abstract class JeyzerPublisher implements JeyzerMXBean{
 				return;
 			
 			dynamicProcessCtxParams.put(key, value);
+		}
+		
+		@Override
+		public void removeDynamicProcessContextParam(final String key){
+			if (key == null)
+				return;
+			
+			dynamicProcessCtxParams.remove(key);
 		}
 		
 		@Override
@@ -1477,7 +1491,12 @@ public abstract class JeyzerPublisher implements JeyzerMXBean{
 		@Override
 		public void setDynamicProcessContextParam(final String key, final String value){
 			// do nothing
-		}	
+		}
+		
+		@Override
+		public void removeDynamicProcessContextParam(final String key){
+			// do nothing
+		}
 
 		@Override
 		public JzrActionHandler getActionHandler() {

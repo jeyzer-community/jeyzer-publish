@@ -4,7 +4,7 @@
 	<groupId>org.jeyzer</groupId>
 	<artifactId>jeyzer-publish</artifactId>
 	<packaging>jar</packaging>
-	<version>3.0</version>
+	<version>3.1-SNAPSHOT</version>
 	<name>Jeyzer Publisher</name>
 	<url>https://github.com/jeyzer-community/jeyzer-publish</url>
 	<description>The Jeyzer Publisher library. More info at https://jeyzer.org/jeyzer-publisher/</description>
@@ -206,7 +206,7 @@
 		<url>https://github.com/jeyzer-community/jeyzer-publish</url>
 		<connection>scm:git:ssh://git@github.com/jeyzer-community/jeyzer-publish.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/jeyzer-community/jeyzer-publish.git</developerConnection>
-		<tag>jeyzer-publish-3.0</tag>
+		<tag>HEAD</tag>
 	</scm>
 		
 	<distributionManagement>
